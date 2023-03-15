@@ -9,8 +9,8 @@ terraform {
 }
 
 resource "aws_instance" "webserver" {
-ami             = "ami-0df24e148fdb9f1d8"
-instance_type   = "t2.micro"
+  ami             = "ami-0df24e148fdb9f1d8"
+  instance_type   = "t2.micro"
 }
 
 resource "aws_ecr_repository" "demo_app2_ecr_repo" {

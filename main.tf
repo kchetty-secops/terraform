@@ -17,10 +17,10 @@ resource "aws_s3_bucket" "testing" {
   }
 }
 
-resource "aws_instance" "webserver" {
+/* resource "aws_instance" "webserver" {
   ami             = "ami-005f9685cb30f234b"
   instance_type   = "t2.micro"
-}
+} */
 
 resource "aws_ecr_repository" "demo_app2_ecr_repo" {
   name = "demo-app2-ecr-repo"
@@ -95,14 +95,14 @@ resource "aws_iam_role_policy_attachment" "ecsTaskExecutionRole_policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
-resource "aws_alb" "application_load_balancer" {
+/* resource "aws_alb" "application_load_balancer" {
   name               = "test-lb-tf" # Naming our load balancer
   load_balancer_type = "application"
   subnets = [ # Referencing the default subnets
     "${aws_default_subnet.default_subnet_a.id}",
     "${aws_default_subnet.default_subnet_b.id}",
     "${aws_default_subnet.default_subnet_c.id}"
-  ]
+  ] */
   # Referencing the security group
   security_groups = ["${aws_security_group.load_balancer_security_group.id}"]
 }
@@ -139,7 +139,7 @@ resource "aws_lb_target_group" "target_group" {
   vpc_id      = "${aws_default_vpc.default_vpc.id}" # Referencing the default VPC
 }
 
-resource "aws_lb_listener" "listener" {
+/* resource "aws_lb_listener" "listener" {
   load_balancer_arn = "${aws_alb.application_load_balancer.arn}" # Referencing our load balancer
   port              = "80"
   protocol          = "HTTP"
@@ -147,7 +147,7 @@ resource "aws_lb_listener" "listener" {
     type             = "forward"
     target_group_arn = "${aws_lb_target_group.target_group.arn}" # Referencing our tagrte group
   }
-}
+} */
 
 resource "aws_ecs_service" "demo_app2_service" {
   name            = "demo-app2-service"                             # Naming our first service

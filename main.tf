@@ -10,6 +10,11 @@ terraform {
 
 resource "aws_s3_bucket" "testing" {
   bucket = "my-tf-test-bucket"
+
+  tags = {
+    Name         = "Test-Bucket"
+    Environment  = "Dev"
+  }
 }
 
 resource "aws_instance" "webserver" {

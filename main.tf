@@ -8,6 +8,10 @@ terraform {
   }
 }
 
+resource "aws_s3_bucket" "testing" {
+  bucket = "my-tf-test-bucket"
+}
+
 resource "aws_instance" "webserver" {
   ami             = "ami-005f9685cb30f234b"
   instance_type   = "t2.micro"

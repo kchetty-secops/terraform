@@ -1,0 +1,548 @@
+import "strings"
+
+providers = {
+	"aws": {
+		"alias": "",
+		"config": {
+			"region": {
+				"constant_value": "us-east-1",
+			},
+		},
+		"full_name":           "registry.terraform.io/hashicorp/aws",
+		"module_address":      "",
+		"name":                "aws",
+		"provider_config_key": "aws",
+		"version_constraint":  "~> 4.0",
+	},
+}
+
+resources = {
+	"aws_alb.application_load_balancer": {
+		"address": "aws_alb.application_load_balancer",
+		"config": {
+			"load_balancer_type": {
+				"constant_value": "application",
+			},
+			"name": {
+				"constant_value": "test-lb-tf",
+			},
+			"security_groups": {
+				"references": [
+					"aws_security_group.load_balancer_security_group.id",
+					"aws_security_group.load_balancer_security_group",
+				],
+			},
+			"subnets": {
+				"references": [
+					"aws_default_subnet.default_subnet_a.id",
+					"aws_default_subnet.default_subnet_a",
+					"aws_default_subnet.default_subnet_b.id",
+					"aws_default_subnet.default_subnet_b",
+					"aws_default_subnet.default_subnet_c.id",
+					"aws_default_subnet.default_subnet_c",
+				],
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "application_load_balancer",
+		"provider_config_key": "aws",
+		"provisioners":        [],
+		"type":                "aws_alb",
+	},
+	"aws_default_subnet.default_subnet_a": {
+		"address": "aws_default_subnet.default_subnet_a",
+		"config": {
+			"availability_zone": {
+				"constant_value": "us-east-1a",
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "default_subnet_a",
+		"provider_config_key": "aws",
+		"provisioners":        [],
+		"type":                "aws_default_subnet",
+	},
+	"aws_default_subnet.default_subnet_b": {
+		"address": "aws_default_subnet.default_subnet_b",
+		"config": {
+			"availability_zone": {
+				"constant_value": "us-east-1b",
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "default_subnet_b",
+		"provider_config_key": "aws",
+		"provisioners":        [],
+		"type":                "aws_default_subnet",
+	},
+	"aws_default_subnet.default_subnet_c": {
+		"address": "aws_default_subnet.default_subnet_c",
+		"config": {
+			"availability_zone": {
+				"constant_value": "us-east-1c",
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "default_subnet_c",
+		"provider_config_key": "aws",
+		"provisioners":        [],
+		"type":                "aws_default_subnet",
+	},
+	"aws_default_vpc.default_vpc": {
+		"address":             "aws_default_vpc.default_vpc",
+		"config":              {},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "default_vpc",
+		"provider_config_key": "aws",
+		"provisioners":        [],
+		"type":                "aws_default_vpc",
+	},
+	"aws_ecr_repository.demo_app2_ecr_repo": {
+		"address": "aws_ecr_repository.demo_app2_ecr_repo",
+		"config": {
+			"name": {
+				"constant_value": "demo-app2-ecr-repo",
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "demo_app2_ecr_repo",
+		"provider_config_key": "aws",
+		"provisioners":        [],
+		"type":                "aws_ecr_repository",
+	},
+	"aws_ecs_cluster.demo_app2_cluster": {
+		"address": "aws_ecs_cluster.demo_app2_cluster",
+		"config": {
+			"name": {
+				"constant_value": "demo-app2-cluster",
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "demo_app2_cluster",
+		"provider_config_key": "aws",
+		"provisioners":        [],
+		"type":                "aws_ecs_cluster",
+	},
+	"aws_ecs_service.demo_app2_service": {
+		"address": "aws_ecs_service.demo_app2_service",
+		"config": {
+			"cluster": {
+				"references": [
+					"aws_ecs_cluster.demo_app2_cluster.id",
+					"aws_ecs_cluster.demo_app2_cluster",
+				],
+			},
+			"desired_count": {
+				"constant_value": 1,
+			},
+			"launch_type": {
+				"constant_value": "FARGATE",
+			},
+			"load_balancer": [
+				{
+					"container_name": {
+						"references": [
+							"aws_ecs_task_definition.demo_app2_task.family",
+							"aws_ecs_task_definition.demo_app2_task",
+						],
+					},
+					"container_port": {
+						"constant_value": 3000,
+					},
+					"target_group_arn": {
+						"references": [
+							"aws_lb_target_group.target_group.arn",
+							"aws_lb_target_group.target_group",
+						],
+					},
+				},
+			],
+			"name": {
+				"constant_value": "demo-app2-service",
+			},
+			"network_configuration": [
+				{
+					"assign_public_ip": {
+						"constant_value": true,
+					},
+					"security_groups": {
+						"references": [
+							"aws_security_group.service_security_group.id",
+							"aws_security_group.service_security_group",
+						],
+					},
+					"subnets": {
+						"references": [
+							"aws_default_subnet.default_subnet_a.id",
+							"aws_default_subnet.default_subnet_a",
+							"aws_default_subnet.default_subnet_b.id",
+							"aws_default_subnet.default_subnet_b",
+							"aws_default_subnet.default_subnet_c.id",
+							"aws_default_subnet.default_subnet_c",
+						],
+					},
+				},
+			],
+			"task_definition": {
+				"references": [
+					"aws_ecs_task_definition.demo_app2_task.arn",
+					"aws_ecs_task_definition.demo_app2_task",
+				],
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "demo_app2_service",
+		"provider_config_key": "aws",
+		"provisioners":        [],
+		"type":                "aws_ecs_service",
+	},
+	"aws_ecs_task_definition.demo_app2_task": {
+		"address": "aws_ecs_task_definition.demo_app2_task",
+		"config": {
+			"container_definitions": {
+				"references": [
+					"aws_ecr_repository.demo_app2_ecr_repo.repository_url",
+					"aws_ecr_repository.demo_app2_ecr_repo",
+				],
+			},
+			"cpu": {
+				"constant_value": 256,
+			},
+			"execution_role_arn": {
+				"references": [
+					"aws_iam_role.ecsTaskExecutionRole.arn",
+					"aws_iam_role.ecsTaskExecutionRole",
+				],
+			},
+			"family": {
+				"constant_value": "demo-app2-task",
+			},
+			"memory": {
+				"constant_value": 512,
+			},
+			"network_mode": {
+				"constant_value": "awsvpc",
+			},
+			"requires_compatibilities": {
+				"constant_value": [
+					"FARGATE",
+				],
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "demo_app2_task",
+		"provider_config_key": "aws",
+		"provisioners":        [],
+		"type":                "aws_ecs_task_definition",
+	},
+	"aws_iam_role.ecsTaskExecutionRole": {
+		"address": "aws_iam_role.ecsTaskExecutionRole",
+		"config": {
+			"assume_role_policy": {
+				"references": [
+					"data.aws_iam_policy_document.assume_role_policy.json",
+					"data.aws_iam_policy_document.assume_role_policy",
+				],
+			},
+			"name": {
+				"constant_value": "ecsTaskExecutionRole",
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "ecsTaskExecutionRole",
+		"provider_config_key": "aws",
+		"provisioners":        [],
+		"type":                "aws_iam_role",
+	},
+	"aws_iam_role_policy_attachment.ecsTaskExecutionRole_policy": {
+		"address": "aws_iam_role_policy_attachment.ecsTaskExecutionRole_policy",
+		"config": {
+			"policy_arn": {
+				"constant_value": "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy",
+			},
+			"role": {
+				"references": [
+					"aws_iam_role.ecsTaskExecutionRole.name",
+					"aws_iam_role.ecsTaskExecutionRole",
+				],
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "ecsTaskExecutionRole_policy",
+		"provider_config_key": "aws",
+		"provisioners":        [],
+		"type":                "aws_iam_role_policy_attachment",
+	},
+	"aws_instance.webserver": {
+		"address": "aws_instance.webserver",
+		"config": {
+			"ami": {
+				"constant_value": "ami-005f9685cb30f234b",
+			},
+			"instance_type": {
+				"constant_value": "t2.micro",
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "webserver",
+		"provider_config_key": "aws",
+		"provisioners":        [],
+		"type":                "aws_instance",
+	},
+	"aws_lb_listener.listener": {
+		"address": "aws_lb_listener.listener",
+		"config": {
+			"default_action": [
+				{
+					"target_group_arn": {
+						"references": [
+							"aws_lb_target_group.target_group.arn",
+							"aws_lb_target_group.target_group",
+						],
+					},
+					"type": {
+						"constant_value": "forward",
+					},
+				},
+			],
+			"load_balancer_arn": {
+				"references": [
+					"aws_alb.application_load_balancer.arn",
+					"aws_alb.application_load_balancer",
+				],
+			},
+			"port": {
+				"constant_value": "80",
+			},
+			"protocol": {
+				"constant_value": "HTTP",
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "listener",
+		"provider_config_key": "aws",
+		"provisioners":        [],
+		"type":                "aws_lb_listener",
+	},
+	"aws_lb_target_group.target_group": {
+		"address": "aws_lb_target_group.target_group",
+		"config": {
+			"name": {
+				"constant_value": "target-group",
+			},
+			"port": {
+				"constant_value": 3000,
+			},
+			"protocol": {
+				"constant_value": "HTTP",
+			},
+			"target_type": {
+				"constant_value": "ip",
+			},
+			"vpc_id": {
+				"references": [
+					"aws_default_vpc.default_vpc.id",
+					"aws_default_vpc.default_vpc",
+				],
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "target_group",
+		"provider_config_key": "aws",
+		"provisioners":        [],
+		"type":                "aws_lb_target_group",
+	},
+	"aws_security_group.load_balancer_security_group": {
+		"address": "aws_security_group.load_balancer_security_group",
+		"config": {
+			"egress": {
+				"constant_value": [
+					{
+						"cidr_blocks": [
+							"0.0.0.0/0",
+						],
+						"description":      null,
+						"from_port":        0,
+						"ipv6_cidr_blocks": null,
+						"prefix_list_ids":  null,
+						"protocol":         "-1",
+						"security_groups":  null,
+						"self":             null,
+						"to_port":          0,
+					},
+				],
+			},
+			"ingress": {
+				"constant_value": [
+					{
+						"cidr_blocks": [
+							"0.0.0.0/0",
+						],
+						"description":      null,
+						"from_port":        80,
+						"ipv6_cidr_blocks": null,
+						"prefix_list_ids":  null,
+						"protocol":         "tcp",
+						"security_groups":  null,
+						"self":             null,
+						"to_port":          80,
+					},
+				],
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "load_balancer_security_group",
+		"provider_config_key": "aws",
+		"provisioners":        [],
+		"type":                "aws_security_group",
+	},
+	"aws_security_group.service_security_group": {
+		"address": "aws_security_group.service_security_group",
+		"config": {
+			"egress": {
+				"constant_value": [
+					{
+						"cidr_blocks": [
+							"0.0.0.0/0",
+						],
+						"description":      null,
+						"from_port":        0,
+						"ipv6_cidr_blocks": null,
+						"prefix_list_ids":  null,
+						"protocol":         "-1",
+						"security_groups":  null,
+						"self":             null,
+						"to_port":          0,
+					},
+				],
+			},
+			"ingress": {
+				"references": [
+					"aws_security_group.load_balancer_security_group.id",
+					"aws_security_group.load_balancer_security_group",
+				],
+			},
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "managed",
+		"module_address":      "",
+		"name":                "service_security_group",
+		"provider_config_key": "aws",
+		"provisioners":        [],
+		"type":                "aws_security_group",
+	},
+	"data.aws_iam_policy_document.assume_role_policy": {
+		"address": "data.aws_iam_policy_document.assume_role_policy",
+		"config": {
+			"statement": [
+				{
+					"actions": {
+						"constant_value": [
+							"sts:AssumeRole",
+						],
+					},
+					"principals": [
+						{
+							"identifiers": {
+								"constant_value": [
+									"ecs-tasks.amazonaws.com",
+								],
+							},
+							"type": {
+								"constant_value": "Service",
+							},
+						},
+					],
+				},
+			],
+		},
+		"count":               {},
+		"depends_on":          [],
+		"for_each":            {},
+		"mode":                "data",
+		"module_address":      "",
+		"name":                "assume_role_policy",
+		"provider_config_key": "aws",
+		"provisioners":        [],
+		"type":                "aws_iam_policy_document",
+	},
+}
+
+provisioners = {}
+
+variables = {}
+
+outputs = {}
+
+module_calls = {}
+
+strip_index = func(addr) {
+	s = strings.split(addr, ".")
+	for s as i, v {
+		s[i] = strings.split(v, "[")[0]
+	}
+
+	return strings.join(s, ".")
+}

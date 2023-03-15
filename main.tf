@@ -9,7 +9,7 @@ terraform {
 }
 
 resource "aws_instance" "webserver" {
-  ami             = "ami-079f51a7bcca65b92"
+  ami             = "ami-05a66dc4a507a82cc"
   instance_type   = "t2.micro"
 }
 

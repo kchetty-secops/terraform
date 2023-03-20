@@ -11,6 +11,7 @@ terraform {
 variable "inputname" {
     type        = string
     description = "Set the name of the VPC"
+    default = "testingvpc"
 }
 
 resource "aws_s3_bucket" "testing" {

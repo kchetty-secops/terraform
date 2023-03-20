@@ -10,7 +10,7 @@ resource "aws_instance" "webserver" {
     Name = "Web Server"
     }
 
-    depends_on = ["aws_instance.database"]
+    depends_on = [aws_instance.database]
 }
 resource "aws_instance" "database" {
     ami             = "ami-005f9685cb30f234b"

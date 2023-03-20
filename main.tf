@@ -8,6 +8,11 @@ terraform {
   }
 }
 
+variable "inputname" {
+    type        = string
+    description = "Set the name of the VPC"
+}
+
 resource "aws_s3_bucket" "testing" {
   bucket = "my-tf-test-bucket"
 

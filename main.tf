@@ -17,6 +17,33 @@ resource "aws_s3_bucket" "testing" {
   }
 }
 
+resource = "aws_vpc" "myvpc" {
+  cidr_block = "10.0.1.0/24"
+
+  tags = {
+    Name = var.inputname 
+  }
+}
+
+output "vpcid" {
+  value = aws_vpc.myvpc.id 
+}
+
+
+## Tuple
+variable "mytuple" {
+  type = tuple([string, number, string])
+  default = ["cat", 1, "dog"]
+}
+
+## Object
+variable "myobject" {
+  type = object({name = string, port = list(number)})
+  default = {
+    name = "Kevin"
+    port = [22, 25, 80, 443]
+  }
+}
 /* resource "aws_instance" "webserver" {
   ami             = "ami-005f9685cb30f234b"
   instance_type   = "t2.micro"

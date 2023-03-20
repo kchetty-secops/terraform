@@ -1,5 +1,5 @@
 provider "aws"{
-    region = "eu-west-2"
+    region = "eu-east-1"
 }
 
 variable "ingress_rules" {
